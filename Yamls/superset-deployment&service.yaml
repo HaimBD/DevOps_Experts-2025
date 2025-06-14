@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: super-deployment
+    labels:
+      app: super
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: super
+  template:
+    metadata:
+      labels:
+        app: super
+    spec:
+      containers:
+        - name: superset
+          image: haim77420/superset:1.1
+          env:
+            - name: SUPERSET_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: superset-secrets
+                  key: SUPERSET_SECRET_KEY
+          command: [ "sh", "-c" ]
+          args:
+              - |
+                superset db upgrade &&
+                superset fab create-admin \
+                  --username admin \
+                  --firstname Superset \
+                  --lastname Admin \
+                  --email admin@example.com \
+                  --password admin &&
+                superset init &&
+                superset run -h 0.0.0.0 -p 8088
+
+          ports:
+            - containerPort: 8088
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: superset-service
+spec:
+  selector:
+    app: super
+  ports:
+  - name: http
+    port: 8088
