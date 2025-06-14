@@ -1,5 +1,5 @@
 
-Creation of docker image andf push to DockerHub:
+Creation of docker image and push to DockerHub:
 
 1. docker build -t superset:1.0 .
 
@@ -7,7 +7,7 @@ Creation of docker image andf push to DockerHub:
 
 3. docker push
 
-Dockerfile, app content, and yamls are all on my Github repo for this class.
+Dockerfile, app content, and Yamls are all on my Github repo for this class.
 
 https://github.com/HaimBD/DevOps_Experts-2025.git
 
