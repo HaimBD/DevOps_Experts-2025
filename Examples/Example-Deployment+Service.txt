@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poly-deployment
+  namespace: prod
+  labels:
+    env: prod
+    server: poly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: prod
+      server: poly
+  template:
+    metadata:
+      labels:
+        env: prod
+        server: poly
+    spec:
+      containers:
+      - name: poly
+        image: haim77420/poly-k8s:0.1
+        ports:
+        - containerPort: 8443
+        env:
+        - name: BUCKET_FOLDER
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: bucket_folder
+        - name: BUCKET_FOLDER_OUTPUT
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: bucket_folder_output
+        - name: BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: bucket_name
+        - name: DYNAMO_TABLE
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: dynamo_table
+        - name: REGION_NAME
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: region_name
+        - name: SECRET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: secret_name
+        - name: TELEGRAM_APP_URL
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: telegram_app_url
+        - name: SQS_URL
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: sqs_url
+        - name: SQS_QUEUE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: poly-secrets
+              key: sqs_queue_name
+        volumeMounts:
+          - name: tls-secret
+            mountPath: /etc/tls-secret
+            readOnly: True
+        resources:
+          requests:
+            cpu: 200m
+            memory: 128Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+
+        livenessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/"
+            port: 8443
+        readinessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/"
+            port: 8443
+      volumes:
+        - name: tls-secret
+          secret:
+            secretName: tls-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poly-service
+  namespace: prod
+spec:
+  selector:
+    env: prod
+    server: poly
+  ports:
+  - name: http
+    port: 8443
+    targetPort: 8443
