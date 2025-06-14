@@ -10,3 +10,8 @@ Creation of docker image andf push to DockerHub:
 Dockerfile, app content, and yamls are all on my Github repo for this class.
 
 https://github.com/HaimBD/DevOps_Experts-2025.git
+
+Dockerfile in superset-app
+
+Yamls in Yamls folder
+
