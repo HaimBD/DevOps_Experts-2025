@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app:
+    container_name: app
     image: haim77420/flask:6
     env_file:
      - .env
@@ -12,5 +13,6 @@ services:
     ports:
       - "8000:8000"
   redis:
+    container_name: redis
     image: redis:alpine
 
