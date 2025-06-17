@@ -1,9 +1,14 @@
 {
   "name": "my_package",
-  "description": "make your package easier to find on the npm website",
   "version": "1.0.0",
+  "description": "make your package easier to find on the npm website",
+  "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "mkdir -p dist && cp app.js dist/",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "redis": "^4.6.7"
   },
   "repository": {
     "type": "git",
@@ -15,5 +20,4 @@
   "bugs": {
     "url": "https://github.com/monatheoctocat/my_package/issues"
   },
-  "homepage": "https://github.com/monatheoctocat/my_package"
-}
+  "homepage": "https://github.com/monatheoctocat/my_package",

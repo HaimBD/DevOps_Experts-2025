@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Runtime
+
 FROM node:16-alpine
 WORKDIR /app
 COPY --from=builder /app/dist /app
