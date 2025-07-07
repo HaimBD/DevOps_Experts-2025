@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: multi-tier-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-tier-app
+  template:
+    metadata:
+      labels:
+        app: multi-tier-app
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)", "--bind", "0.0.0.0"]
+        env:
+         - name: REDIS_PASSWORD
+           valueFrom:
+             secretKeyRef:
+                name: redis-secret
+                key: REDIS_PASSWORD
+        ports:
+          - containerPort: 6379

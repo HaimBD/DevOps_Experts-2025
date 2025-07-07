@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-redis-external
+spec:
+  type: ExternalName
+  externalName: flask-redis-service.multi-tier-app.svc.cluster.local

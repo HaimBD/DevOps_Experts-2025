@@ -1,0 +1,5 @@
+flask
+fido2
+telemetry
+mysql-connector-python
+mysql-connector

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-mysql-external
+spec:
+  type: ExternalName
+  externalName: flask-mysql-service.default.svc.cluster.local

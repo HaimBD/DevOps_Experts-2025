@@ -6,3 +6,5 @@ metadata:
 data:
   MYSQL_DATABASE: "fullstack_app"
   MYSQL_USER: "fullstack-app-user"
+  MYSQL_HOST: "mysql-service"
+  AUTH_PLUGIN: "mysql_native_password"
