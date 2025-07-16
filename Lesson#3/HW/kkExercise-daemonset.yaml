@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-logger
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logger
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-logger
+  template:
+    metadata:
+      labels:
+        name: fluentd-logger
+    spec:
+      containers:
+      - name: fluentd-logger
+        image: fluent/fluentd:v1.16
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+          readOnly: true
+        - name: my-storage
+          mountPath: /var/lib/docker/containers
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: my-storage
+        persistentVolumeClaim:
+          claimName: fluentd-pvc

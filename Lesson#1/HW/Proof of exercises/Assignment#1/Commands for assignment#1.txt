@@ -1,0 +1,28 @@
+SuperSet:
+
+Creation of docker image andf push to DockerHub:
+
+1. docker build -t superset:1.0 .
+
+2. docker image tag superset:1.0 haim77420/superset:1.0
+
+3. docker push
+
+Dockerfile, app content, and yamls are all on my Github repo for this class.
+
+https://github.com/HaimBD/DevOps_Experts-2025.git
+
+Dockerfile in superset-app
+
+Yamls in Yamls folder
+
+
+AirFlow:
+
+Creation of resources(Deployment and service).
+
+1. kubectl apply -f C:\Users\HaimBD\PycharmProjects\DevOps_Experts-2025\Yamls\airflow.yaml
+
+2. kubectl port-forward svc/airflow-service 8080:8080 --address 0.0.0.0
+
+

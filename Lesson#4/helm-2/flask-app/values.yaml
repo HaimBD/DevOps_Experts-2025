@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: haim77420/flask-helm
+  tag: 0.1
+
+service:
+  type: ClusterIP
+  port: 80
+
+serviceAccount:
+  create: true
+  name: "flask-helm-serviceaccount"
+
+

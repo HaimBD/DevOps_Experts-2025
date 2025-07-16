@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: flask-state
+  namespace: flask-app
+spec:
+  serviceName:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-state
+  template:
+    metadata:
+      labels:
+        app: flask-state
+    spec:
+      containers:
+      - name: flask-app
+        image: haim77420/flask-app:0.1
+        env:
+        - name: APP_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: flask-config
+              key: APP_ENV
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: flask-config
+              key: LOG_LEVEL
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: flask-secret
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        ports:
+        - containerPort: 5000
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

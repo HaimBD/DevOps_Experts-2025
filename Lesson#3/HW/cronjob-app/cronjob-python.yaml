@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: flask-cronjob
+  namespace: flask-app
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: flask-cronjob-container
+            image: haim77420/flask-cron:0.4
+            volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+          restartPolicy: OnFailure
+          volumes:
+          - name: logs
+            emptyDir: {}
