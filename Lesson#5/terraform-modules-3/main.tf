@@ -6,7 +6,7 @@ provider "aws" {
 
 module "ec2_instance" {
   source = "./modules/ec2_instance"
-  ami           = "ami-0e86e20dae9224db8"
+  ami           = "ami-020cba7c55df1f615"
   instance_type = "t2.micro"
 
   tags = {

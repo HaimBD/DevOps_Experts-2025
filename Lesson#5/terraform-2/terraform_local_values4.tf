@@ -1,17 +1,16 @@
-
 variable "environment" {
   default = "dev"
 }
 
 locals {
-  env_prefix = "${var.environment}-app"
+  instance_type = var.environment == "prod" ? "t2.medium" : "t2.micro"
 }
 
 resource "aws_instance" "example" {
   ami           = "ami-0e86e20dae9224db8"
-  instance_type = "t2.micro"
+  instance_type = local.instance_type
 
   tags = {
-    Name = local.env_prefix
+    Name = "${var.environment}-instance"
   }
 }
