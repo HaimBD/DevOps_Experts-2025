@@ -1,30 +1,8 @@
-# variables.tf
-variable "region" {
-  description = "AWS region where the cluster will be deployed"
-  default     = "us-east-1"
-}
+region         = "us-east-1"
+instance_count = 2
+instance_type  = "t3.medium"
+ami_id         = "ami-020cba7c55df1f615"
+key_name       = "my-ssh-key"
 
-variable "cluster_name" {
-  description = "The name of the EKS cluster"
-  default     = "my-eks-cluster"
-}
-
-variable "desired_capacity" {
-  description = "Desired number of worker nodes"
-  default     = 2
-}
-
-variable "max_size" {
-  description = "Maximum number of worker nodes"
-  default     = 3
-}
-
-variable "min_size" {
-  description = "Minimum number of worker nodes"
-  default     = 1
-}
-
-variable "instance_type" {
-  description = "EC2 instance type for the worker nodes"
-  default     = "t3.medium"
-}
+docker_username = "summaryexperts"
+docker_image    = "summaryexperts/django-app:latest"
